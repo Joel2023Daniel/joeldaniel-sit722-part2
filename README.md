@@ -1,0 +1,1 @@
+This Application is a Python program that has been configured with an appropriate Dockerfile and deployment.yml script for the creation of its application image as well as its hosting on a local Kubernetes instance with a PostgreSQL Instance in Render.
