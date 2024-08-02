@@ -1,0 +1,45 @@
+#
+# To deploy:
+#
+# kubectl apply -f scripts/deployment.yml
+#
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deakin-library
+  labels:
+    app: deakin-library
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deakin-library
+  template:
+    metadata:
+      labels:
+        app: deakin-library
+    spec:
+      containers:
+      - name: deakin-library
+        image: deakin-library:latest
+        imagePullPolicy: Never 
+        env:
+        - name: PORT
+          value: "4000"
+        - name: DATABASE_URL
+          value: "postgresql://sit722_task6_2p_user:71nrBY93rNoG3L4zceNdABAg03DHy7IJ@dpg-cqllqm5umphs7395775g-a.singapore-postgres.render.com/sit722_task6_2p"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deakin-library
+spec:
+  selector:
+    app: deakin-library
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4000
+      nodePort: 30000
